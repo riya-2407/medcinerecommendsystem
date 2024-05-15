@@ -1,0 +1,36 @@
+
+.homeimage{
+	height: 600px; 
+	width: 100%; 
+
+}
+
+.img-div{
+    background-image: url(pexels-total-shape-2383010.jpg);
+    background-size: cover;
+    height: 600px;
+    width: 100%;
+    animation: changeImage 20s linear infinite;
+}
+
+@keyframes changeImage {
+    0%{
+        background-image: url(pexels-total-shape-2383010.jpg);
+    }
+    25%{
+        background-image: url(online-medical-help-concept-woman-doctor-glasses-face-mask-showing-mobile-phone-screen-app.jpg);
+    }
+    50%{
+        background-image: url(towfiqu-barbhuiya-w8p9cQDLX7I-unsplash.jpg);
+    }
+    75%{
+        background-image: url(portrait-smiling-medical-worker-girl-doctor-white-coat-with-stethoscope-pointing-fingers-left.jpg);
+    }
+    100%{
+        background-image: url(pexels-total-shape-2383010.jpg);
+    }
+    
+}
+
+
+
