@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health Zone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="image.css">
+    <link rel="stylesheet" href="contact.css">
+  </head>
+
+  <style>
+    nav {
+        position:fixed;
+        background-color:blue;
+        overflow: hidden;
+        position:fixed;
+        }
+    a {
+        margin: 0;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+      button{
+            text-align: center;
+            padding: 10px 13px;
+            background-color:white;
+            color:blue;
+            border:none;
+            text-decoration: none;
+            margin: 0 10px 0 0;
+            border-radius: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark " style="position: fixed; width: 100%;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">HealthZone</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="navbar-item">
+                        <a href="#home" class="active">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="#about">About</a>   
+                    </li>
+                    <li class="nav-item">
+                        <a href="#developer">Developer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <button href="login.html" onclick="location.href='login.html'">LogIn</button >
+                <button href="signup.html" onclick="location.href='signup.html'">SignUp</button>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    </div>
+
+    <div class="homeimage" id="home">
+        <div class="img-div"></div>
+
+    </div>
+
+
+
+
+<!-- main form of page -->
+
+<div class="container my-4 mt-4" style="background :white; color: white; border-radius: 15px; padding: 40px;">
+    <form action="/predict" method="post">
+        <div class="form-group " >
+            <label for="symptoms"style="color:blue; font-size: 35px;">Select Symptoms:</label>
+            <input type="text" class="form-control", id="symptoms" name="symptoms" placeholder="type symptoms such as itching, sleeping, aching etc">
+
+        </div>
+        <br>
+        <button type="button" id="startSpeechRecognition" class="btn btn-primary" style="margin-left:3px;border:1px solid white;  background:blue;border-radius:20px;">
+            Start Speech Recognition
+        </button>
+        <br>
+
+        <!-- Display the transcribed text here -->
+        <div name="mysysms" id="transcription"></div>
+
+        <br>
+
+        <button type="submit" class="btn  btn-lg" style="width: 100%; background:blue; color:white; padding: 14px; margin-bottom: 5px;">Predict</button>
+    </form>
+</div>
+
+<!-- Results -->
+<h1 class="text-center my-4 mt-4" style="color:blue;">Our System Results</h1>
+<div class="container">
+    <div class="result-container">
+        <!-- Buttons to toggle display -->
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:red;color:white;">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:blue ;color:white;">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:orange;color:white;">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:green ;color:white;">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:brown;color:white;">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:purple;color:white;">Diets</button>
+    </div>
+</div>
+
+
+<!-- Disease Model -->
+    <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue; color:white;"> <!-- Set header background color inline -->
+                    <h5 class="modal-title" id="diseaseModalLabel">Disease</a></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: modal-body-color;"> <!-- Set modal body background color inline -->
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Description Model -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: blue; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Precaution Model -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue; color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Medications Model -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue; color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Model -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: blue; color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diets Model -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue; color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!----------About section start  -->
+
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: whitesmoke;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #about-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2em 0;
+        }
+
+        #about-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        #about-section div {
+            width: 48%;
+        }
+
+        #about-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            #about-section {
+                flex-direction: column;
+            }
+
+            #about-section div {
+                width: 100%;
+                margin-bottom: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="about" style="background-color:whitesmoke; color: blue;" >About Us</h1>
+    </header>
+
+    <div class="container" id="about-section">
+        <div>
+            <p>A medicine recommendation system is a type of software or application designed to assist healthcare professionals or individuals in making informed decisions about medication choices. These systems leverage various technologies, including artificial intelligence (AI) and machine learning, to analyze and interpret medical data in order to provide personalized recommendations for medications.</p>
+        </div>
+        <img src="/image/img3.webp" alt="About Us Image">
+    </div>
+    <!---  About Section end-->
+
+    
+
+
+
+    <!--- developer section start-->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #developer-section {
+            padding: 2em 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .developer-info {
+            width: 48%;
+            background-color: #fff;
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .developer-info img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1em;
+        }
+
+        .developer-info h2 {
+            color: #333;
+        }
+
+        .developer-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .developer-info {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1  id="developer" style="color: blue;">Meet the Developers</h1>
+    </header>
+
+    <div class="container" id="developer-section">
+        <div class="developer-info">
+            <img src="/image/medical3.png" alt="Machine Learning Engineer">
+            <h2>Machine Learning Engineer</h2>
+            <p>Hello, I'm your Machine Learning Engineer with over 5 years of experience in the field. We are passionate about harnessing the power of technology to make a positive impact on people's lives. Allow us to share a bit about our journey in the world of machine learning.</p>
+        </div>
+
+        <div class="developer-info">
+            <img src="/image/medical4.png" alt="Data Scientist">
+            <h2>Our Expertise</h2>
+            <p>Hello, I have a strong academic background in computer science and a deep fascination for Data science. We embarked on a journey that has taken me across the globe, working on diverse and innovative projects. Over the years, I have had the privilege of collaborating on international projects that have pushed the boundaries of what's possible in Data science.</p>
+        </div>
+
+        <div class="developer-info">
+            <img src="/image/medical1.png" alt="Tech Expert">
+            <h2>A Commitment to Excellence</h2>
+            <p>Hello, Our work is driven by a commitment to excellence and a belief that technology should be accessible and beneficial to everyone. Whether it's developing predictive models, creating intelligent algorithms, or designing user-friendly interfaces, We strive for solutions that are both cutting-edge and user-centric.</p>
+        </div>
+
+        <div class="developer-info">
+            <img src="/image/medical2.png" alt="Passion for Health Tech">
+            <h2>Passion for Health Tech</h2>
+            <p>The development of [HealthZone] represents a convergence of our passion for ML and our dedication to improving healthcare accessibility. We believe that ML has the potential to transform the way we approach healthcare, making it more personalized and informative. This platform is a testament to that vision.</p>
+        </div>
+    </div>
+
+    <!--- devloper section end -->
+
+    <!-- blog section start -->
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #blog-section {
+            padding: 2em 0;
+        }
+
+        .blog-post {
+            background-color: #fff;
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-post h2 {
+            color: #333;
+        }
+
+        .blog-post p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .blog-post {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="blog" style="color: blue;">Blog </h1>
+    </header>
+
+    <div class="container" id="blog-section">
+        <div class="blog-post">
+            <p>In the age of technology and information, access to accurate and timely healthcare is more critical than ever. With the increasing importance of remote healthcare solutions, we embarked on a journey to develop a symptom-based disease diagnosis web application. Leveraging Flask for the backend and a Decision Tree Classifier model, we created a user-friendly platform that can help users identify potential illnesses based on their reported symptoms.</p>
+
+        <h3>The Problem</h3>
+        <p>The project began with recognizing a common issue: people often experience symptoms and want quick answers about their health concerns. It can be challenging to differentiate between various diseases, especially when symptoms overlap. Our goal was to provide a convenient solution for users to input their symptoms and receive potential diagnoses.</p>
+
+        <h3>The Solution</h3>
+        <p>We developed a web app that allows users to enter a list of symptoms they are experiencing. The app then uses a pre-trained Decision Tree Classifier model to predict the most likely disease based on the provided symptoms. Here's how it works:</p>
+
+        <ol>
+            <li><b><strong>Symptom Input:</strong></b> Users enter their symptoms through a user-friendly interface. The web app supports a wide range of symptoms, making it versatile for different scenarios.</li>
+            <li><b><strong>Machine Learning Model:</strong></b> We trained a Decision Tree Classifier using a dataset containing symptoms and corresponding diseases. The model is capable of predicting diseases based on input symptoms.</li>
+            <li><b><strong>Prediction:</strong></b> The app uses the model to predict the most likely disease, providing users with instant information about potential health concerns.</li>
+            <li><b><strong>Additional Information: </strong></b> To enhance user experience, the app also provides additional information about the predicted disease. This includes a description of the disease, recommended precautions, medications, dietary advice, and workout tips.</li>
+
+        </ol>
+
+        <h3>Key Features</h3>
+        <ul type="circle">
+            <li><b><strong>User-Friendly Interface:</strong></b> The web app boasts an intuitive and easy-to-navigate interface, ensuring that users can input their symptoms without any hassle.</li>
+            <li><b><strong>Accurate Predictions:</strong></b> Leveraging machine learning, our model provides accurate disease predictions based on the symptoms provided by the user.</li>
+            <li><b><strong>Comprehensive Information: </strong></b>In addition to predictions, the app offers comprehensive information about the predicted disease, including descriptions, precautions, medications, diet recommendations, and workout tips.</li>
+            <li><b><strong>ducational Content:</strong></b> To empower users with knowledge, the app includes informative blog posts about various health topics.</li>
+        </ul>
+
+        <br>
+
+        <h3>Conclusion</h3>
+        <p>Our Symptom-Based Disease Diagnosis Web App brings the power of machine learning and healthcare information to the fingertips of users. It serves as a valuable resource for individuals looking to gain insights into their health conditions quickly and conveniently. By combining technology and healthcare, we aim to make healthcare more accessible and user-centric.
+
+In an era where remote healthcare solutions are gaining prominence, this project represents a significant step forward in providing accessible and reliable healthcare information to the masses. We hope that this project will contribute to better health awareness and ultimately improve the well-being of individuals worldwide.</p>
+
+            
+        </div>
+        
+        
+
+    </div>
+
+
+    <!--- blog section end -->
+
+    <!--- Contact Section Start-->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            
+        }
+
+        header {
+            background-color: whitesmoke;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #contact-section {
+            padding: 2em 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .contact-info {
+            width: 48%;
+            background-color: #fff;
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info h2 {
+            color: #333;
+        }
+
+        .contact-info p {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .contact-info {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="contact" style="background-color: whitesmoke; color: blue;">Contact Us</h1>
+    </header>
+
+    <div class="container" id="contact-section">
+        <div class="contact-info">
+            <h2>Customer Support</h2>
+            <p>Our dedicated customer support team is available to assist you with any inquiries or issues you may have. Whether it's a technical question, feedback, or a general inquiry, we're just a message away.</p>
+        </div>
+
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Feel free to reach out to us via email or through the contact form below. We value your feedback and are committed to providing you with the best possible experience.</p>
+            <p>Email: aditidwivedi035@gmail.com</p>
+            <p>Phone: 9341715335</p>
+            <p><b>Email:</b> mansisaini458@gmail.com</p>
+<p><b>Phone:</b> 8344715535</p>
+<p><b>Email:</b> riyamishra222@gmail.com</p>
+<p><b>Phone:</b> 5347455535</p>
+            
+        </div>
+
+        <div class="contact-info">
+            <h2>Stay Connected</h2>
+            <p>Stay up-to-date with the latest news, updates, and health tips by following us on social media. Connect with us on Facebook or Instagram to join our growing community.</p>
+        </div>
+
+        <div class="contact-info">
+            <h2>Location</h2>
+            <p>Prayagraj, Uttar Pradesh, India (211003)</p>
+        </div>
+    </div>
+
+
+
+    <!-- Contact section end -->
+    <section class="footer">
+        <div class="footer-row">
+            <div class="footer-col">
+                <h4>Info</h4>
+                <ul class="links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Compressions</a></li>
+                    <li><a href="#">Customers</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Collection</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul class="links">
+                    <li><a href="#">Free Designs</a></li>
+                    <li><a href="#">Latest Designs</a></li>
+                    <li><a href="#">Themes</a></li>
+                    <li><a href="#">Popular Designs</a></li>
+                    <li><a href="#">Art Skills</a></li>
+                    <li><a href="#">New Uploads</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul class="links">
+                    <li><a href="#">Customer Agreement</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">GDPR</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                    <li><a href="#">Media Kit</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <p>Subscribe to our newsletter for a weekly dose of news, updates, helpful tips, and exclusive offers.
+                </p>
+                <form action="#">
+                    <input type="text" placeholder="Your email" required>
+                    <button type="submit">SUBSCRIBE</button>
+                </form>
+                <div class="icons">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <i class="fa-brands fa-github"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<script>
+    const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
+    const transcriptionDiv = document.getElementById('transcription');
+
+    startSpeechRecognitionButton.addEventListener('click', startSpeechRecognition);
+
+    function startSpeechRecognition() {
+        const recognition = new webkitSpeechRecognition(); // Use webkitSpeechRecognition for compatibility
+
+        recognition.lang = 'en-US'; // Set the language for recognition
+
+        recognition.onresult = function (event) {
+            const result = event.results[0][0].transcript;
+            transcriptionDiv.textContent = result;
+        };
+
+        recognition.onend = function () {
+            console.log('Speech recognition ended.');
+        };
+
+        recognition.start();
+    }
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>
